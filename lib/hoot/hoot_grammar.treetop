@@ -1,0 +1,114 @@
+#           -------
+#  ._____. ( Hoot! )
+#  { O,o }  -y-----
+#  (____(\
+#   ="="=
+#
+module Hoot
+  grammar HootGrammar
+    ##############
+    #    Core    #
+    ##############
+
+    rule definition
+      'WHEN' whitespace+ conditions whitespace+ 'THEN' whitespace+ actions <Definition>
+    end
+
+    ##############
+    # Conditions #
+    ##############
+
+    rule conditions
+      expression (and expression)*
+    end
+
+    rule expression
+      conditional_expression / '(' space? conditions space? ')'
+    end
+
+    rule conditional_expression
+      value space? comparative_operator space? value 
+    end
+
+   rule and
+      whitespace+ 'AND' whitespace+
+    end 
+
+    ##############
+    # Operations #
+    ##############
+
+    rule comparative_operator 
+      equality / inequality
+    end
+
+    rule equality
+      '='1..2 / 'EQUALS' <EqualityOperator>
+    end
+
+    rule inequality
+      '!=' / 'NOT EQUALS' <InequalityOperator>
+    end
+
+    ##############
+    #   Actions  #
+    ##############
+
+    rule actions
+      function (and function)*
+    end
+
+    rule function
+      reserved_keyword function_arguments 
+    end
+
+    rule function_arguments 
+      '(' value (',' space? value)* ')' 
+    end
+
+    rule reserved_keyword
+      'EMAIL' / 'SMS' / 'SET' / 'INC' / 'DEC'
+    end
+
+    ##############
+    #  Literals  #
+    ##############
+        
+    rule value
+      variable / string / integer / float
+    end
+
+    rule variable
+      local_variable / global_variable
+    end
+
+    rule local_variable
+      [a-zA-Z] [a-zA-Z0-9_]+
+    end
+
+    rule global_variable
+      '$' local_variable
+    end
+
+    rule integer
+      ('+' / '-')? [0-9]+ <IntegerLiteral>
+    end
+
+    rule float
+      ('+' / '-')? [0-9]+ (('.' [0-9]+) / ('e' [0-9]+)) <FloatLiteral>
+    end
+
+    rule string
+      '"' [^"]* '"' <StringLiteral>
+    end
+   
+    rule whitespace
+      [\s]+ # This one includes new lines and returns 
+    end
+
+    rule space 
+      [ \t]+
+    end
+
+  end
+end
