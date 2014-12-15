@@ -7,6 +7,7 @@ Spork.prefork do
   require 'simplecov'
   require 'rspec/its'
   require 'rr'
+  require 'pry'
 
   SimpleCov.formatters = [SimpleCov::Formatter::HTMLFormatter]
 

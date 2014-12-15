@@ -22,11 +22,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'guard',        '~> 2.8.2'
   spec.add_development_dependency 'guard-rspec',  '~> 4.3.1'
   spec.add_development_dependency 'guard-spork',  '~> 2.0.1'
+  spec.add_development_dependency 'pry',          '~> 0.10'
+  spec.add_development_dependency 'pry-byebug',   '~> 2.0'
   spec.add_development_dependency 'rake',         '~> 10.0'
   spec.add_development_dependency 'rr',           '~> 1.1'
-  spec.add_development_dependency 'rspec',        '~> 10.0'
   spec.add_development_dependency 'rspec',        '~> 3.1'
   spec.add_development_dependency 'rspec-its',    '~> 1.0'
   spec.add_development_dependency 'simplecov',    '~> 0.9'
-  spec.add_development_dependency 'spork',        '~> 0.9.2'
 end
