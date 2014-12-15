@@ -11,69 +11,105 @@ module Hoot
     ##############
 
     rule definition
-      'WHEN' whitespace+ conditions whitespace+ 'THEN' whitespace+ actions <Definition>
+      space? 'WHEN' space+ decision space+ 'THEN' space+ action space* <Definition>
     end
 
     ##############
-    # Conditions #
+    # Decisions  #
     ##############
 
-    rule conditions
-      expression (and expression)*
+    rule decision
+      binary_decision / unary_decision
+    end
+
+    rule binary_decision
+      operand_1:unary_decision space+
+      operator:binary_operator space+
+      operand_2:decision <BinaryDecision>
+    end
+
+    rule unary_decision
+      expression / parenthesized
+    end
+
+    rule parenthesized
+      '(' space? contents:decision space? ')' <Parenthesized>
     end
 
     rule expression
-      conditional_expression / '(' space? conditions space? ')'
+      operand_1:value space+
+      operator:comparative_operator space+
+      operand_2:value <BinaryDecision>
     end
-
-    rule conditional_expression
-      value space? comparative_operator space? value 
-    end
-
-   rule and
-      whitespace+ 'AND' whitespace+
-    end 
 
     ##############
     # Operations #
     ##############
 
-    rule comparative_operator 
-      equality / inequality
+    rule binary_operator
+      and / or / xor
+    end
+
+    rule comparative_operator
+      equality / inequality / greater_than / lesser_than / in / not_in
     end
 
     rule equality
-      '='1..2 / 'EQUALS' <EqualityOperator>
+      '='1..2 / 'EQUALS'
     end
 
     rule inequality
-      '!=' / 'NOT EQUALS' <InequalityOperator>
+      '!=' / 'NOT EQUALS'
+    end
+
+    rule greater_than
+      '>' / '>='
+    end
+
+    rule lesser_than
+      '<' / '<='
+    end
+
+    rule in
+      'in' / 'IN'
+    end
+
+    rule not_in
+      'not in' / 'NOT IN'
+    end
+
+    rule and
+     'and' / 'AND' 
+    end
+
+    rule or
+      'or' / 'OR'
+    end
+
+    rule xor
+      'xor' / 'XOR'
     end
 
     ##############
     #   Actions  #
     ##############
 
-    rule actions
-      function (and function)*
+    rule action
+      function (space+ 'AND' space+ function)?
     end
 
     rule function
-      reserved_keyword function_arguments 
+      name:([A-Z]3..) '(' args:arguments ')' <Function>
     end
 
-    rule function_arguments 
-      '(' value (',' space? value)* ')' 
-    end
-
-    rule reserved_keyword
-      'EMAIL' / 'SMS' / 'SET' / 'INC' / 'DEC'
+    rule arguments
+      value (space? ',' space? args:arguments)? <Args>
     end
 
     ##############
-    #  Literals  #
+    #  Variables #
     ##############
-        
+
     rule value
       variable / string / integer / float
     end
@@ -83,12 +119,16 @@ module Hoot
     end
 
     rule local_variable
-      [a-zA-Z] [a-zA-Z0-9_]+
+      [a-zA-Z] [a-zA-Z0-9_]+ <LocalVariable>
     end
 
     rule global_variable
-      '$' local_variable
+      '$' local_variable <GlobalVariable>
     end
+
+    ##############
+    #  Literals  #
+    ##############
 
     rule integer
       ('+' / '-')? [0-9]+ <IntegerLiteral>
@@ -99,16 +139,11 @@ module Hoot
     end
 
     rule string
-      '"' [^"]* '"' <StringLiteral>
-    end
-   
-    rule whitespace
-      [\s]+ # This one includes new lines and returns 
+      '"' str_value:([^"]*) '"' <StringLiteral>
     end
 
-    rule space 
-      [ \t]+
+    rule space
+      [\s]+
     end
-
   end
 end

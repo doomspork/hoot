@@ -3,9 +3,8 @@ require 'spec_helper'
 module Hoot
   describe HootGrammar do
     shared_examples 'a valid grammar rule' do
-      let(:parser) { HootGrammarParser.new }
-      subject { parser.parse(code) }
-      it { is_expected.to be_a Definition }
+      subject { Hoot.parse(code) }
+      it { is_expected.to be_a Runtime }
     end
 
     it_behaves_like 'a valid grammar rule' do
