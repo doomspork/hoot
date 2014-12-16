@@ -1,0 +1,149 @@
+#           -------
+#  ._____. ( Hoot! )
+#  { O,o }  -y-----
+#  (____(\
+#   ="="=
+#
+module Hoot
+  grammar HootGrammar
+    ##############
+    #    Core    #
+    ##############
+
+    rule definition
+      space? 'WHEN' space+ decision space+ 'THEN' space+ action space* <Definition>
+    end
+
+    ##############
+    # Decisions  #
+    ##############
+
+    rule decision
+      binary_decision / unary_decision
+    end
+
+    rule binary_decision
+      operand_1:unary_decision space+
+      operator:binary_operator space+
+      operand_2:decision <BinaryDecision>
+    end
+
+    rule unary_decision
+      expression / parenthesized
+    end
+
+    rule parenthesized
+      '(' space? contents:decision space? ')' <Parenthesized>
+    end
+
+    rule expression
+      operand_1:value space+
+      operator:comparative_operator space+
+      operand_2:value <BinaryDecision>
+    end
+
+    ##############
+    # Operations #
+    ##############
+
+    rule binary_operator
+      and / or / xor
+    end
+
+    rule comparative_operator
+      equality / inequality / greater_than / lesser_than / in / not_in
+    end
+
+    rule equality
+      '='1..2 / 'EQUALS'
+    end
+
+    rule inequality
+      '!=' / 'NOT EQUALS'
+    end
+
+    rule greater_than
+      '>' / '>='
+    end
+
+    rule lesser_than
+      '<' / '<='
+    end
+
+    rule in
+      'in' / 'IN'
+    end
+
+    rule not_in
+      'not in' / 'NOT IN'
+    end
+
+    rule and
+     'and' / 'AND' 
+    end
+
+    rule or
+      'or' / 'OR'
+    end
+
+    rule xor
+      'xor' / 'XOR'
+    end
+
+    ##############
+    #   Actions  #
+    ##############
+
+    rule action
+      function (space+ 'AND' space+ function)?
+    end
+
+    rule function
+      name:([A-Z]3..) '(' args:arguments ')' <Function>
+    end
+
+    rule arguments
+      value (space? ',' space? args:arguments)? <Args>
+    end
+
+    ##############
+    #  Variables #
+    ##############
+
+    rule value
+      variable / string / integer / float
+    end
+
+    rule variable
+      local_variable / global_variable
+    end
+
+    rule local_variable
+      [a-zA-Z] [a-zA-Z0-9_]+ <LocalVariable>
+    end
+
+    rule global_variable
+      '$' local_variable <GlobalVariable>
+    end
+
+    ##############
+    #  Literals  #
+    ##############
+
+    rule integer
+      ('+' / '-')? [0-9]+ <IntegerLiteral>
+    end
+
+    rule float
+      ('+' / '-')? [0-9]+ (('.' [0-9]+) / ('e' [0-9]+)) <FloatLiteral>
+    end
+
+    rule string
+      '"' str_value:([^"]*) '"' <StringLiteral>
+    end
+
+    rule space
+      [\s]+
+    end
+  end
+end
