@@ -12,7 +12,7 @@ Hoot is the language [Orwell](orwell.io) speaks, use it to specify rules and the
 
 Add this line to your application's Gemfile:
 
-           gem 'hoot', github: 'doomspork/hoot'
+    gem 'hoot', github: 'doomspork/hoot'
 
 ## Context
 
