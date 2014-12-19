@@ -115,9 +115,6 @@ module Hoot
   ##############
 
   class Args < Treetop::Runtime::SyntaxNode
-    def pack
-      [value]
-    end
   end
 
   class Function < Treetop::Runtime::SyntaxNode
