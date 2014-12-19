@@ -9,5 +9,10 @@ module Hoot
     Runtime.new(Parser.parse(definition))
   end
 
-  module_function :parse
+  def run(definition, context)
+    runtime = parse(definition)
+    runtime.run(context)
+  end
+
+  module_function :parse, :run
 end
