@@ -34,4 +34,29 @@ describe Hoot do
       end
     end
   end
+
+  describe '.run' do
+    let(:code) do
+      <<-CODE
+          WHEN
+            value = 1
+            AND
+            foo = "bar"
+          THEN
+            EMAIL("test@orwell.io", "Test Email", "")
+            AND
+            SMS("")
+      CODE
+    end
+
+    subject { Hoot.run(code, nil) }
+
+    it 'will parse and run the code' do
+      any_instance_of(Hoot::Runtime) do |klz|
+        mock(klz).run(nil)
+      end
+
+      subject
+    end
+  end
 end
