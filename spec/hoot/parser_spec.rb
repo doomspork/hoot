@@ -10,7 +10,7 @@ module Hoot
             AND
             foo = "bar"
           THEN
-            EMAIL("test@orwell.io", "Test Email", "")
+            EMAIL("test@example.com", "Test Email", "")
             AND
             SMS("")
         CODE
@@ -26,7 +26,7 @@ module Hoot
           WHEN
             a value = 1
           THN
-            EMAIL("test@orwell.io", "Test Email", "")
+            EMAIL("test@example.com", "Test Email", "")
           CODE
         end
 

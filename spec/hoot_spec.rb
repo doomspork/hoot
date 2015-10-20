@@ -9,7 +9,7 @@ describe Hoot do
             AND
             foo = "bar"
           THEN
-            EMAIL("test@orwell.io", "Test Email", "")
+            EMAIL("test@example.com", "Test Email", "")
             AND
             SMS("")
       CODE
@@ -25,7 +25,7 @@ describe Hoot do
           WHEN
             a value = 1
           THN
-            EMAIL("test@orwell.io", "Test Email", "")
+            EMAIL("test@example.com", "Test Email", "")
         CODE
       end
 
@@ -43,7 +43,7 @@ describe Hoot do
             AND
             foo = "bar"
           THEN
-            EMAIL("test@orwell.io", "Test Email", "")
+            EMAIL("test@example.com", "Test Email", "")
             AND
             SMS("")
       CODE

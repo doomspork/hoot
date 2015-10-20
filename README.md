@@ -6,7 +6,7 @@
    ="="=
 ```
 
-Hoot is the language [Orwell](orwell.io) speaks, use it to specify rules and their outcomes.
+Hoot is a proof-of-concept language around conditions and their outcomes.
 
 ## Installation
 
@@ -16,13 +16,13 @@ Add this line to your application's Gemfile:
 
 ## Context
 
-Hoot comprises a grammar, parser, and simple runtime.  Resolving variables, both local and shared, is handle by a `Context` object, function lookups are also handled by the `Context`.  Any Ruby object that implements these three methods can serve as a `Context`:
+Hoot is made up of three parts: a grammar, a parser, and basic runtime.  Resolving variables and function lookup are handled by a `Context` object.  To crate a `Context` implement these methods:
 
 + `#local(name)`
 + `#shared(name)`
 + `#function(name)`
 
-Here is an example that defines the functions `ECHO` and `LEN` and backs variables using hashes:
+Here an example defines the functions `ECHO` and `LEN` and backs variables using hashes:
 
 ```ruby
 class Context

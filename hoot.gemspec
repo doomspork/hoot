@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.name          = 'hoot'
   spec.version       = Hoot::VERSION
   spec.authors       = ['Sean Callan']
-  spec.email         = ['seancallan@gmail.com']
-  spec.summary       = 'Rule parser for Orwell'
-  spec.homepage      = 'http://orwell.io'
+  spec.email         = ['sean@seancallan.com']
+  spec.summary       = 'A simple condition based language.'
+  spec.homepage      = 'http://seancallan.com'
   spec.license       = 'MIT'
 
   spec.files         = ['README.md'] + Dir['lib/**/*'] 
